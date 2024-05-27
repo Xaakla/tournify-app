@@ -62,7 +62,7 @@ export const NPosition = styled.Text`
 export const TeamName = styled.Text`
   flex: 1;
   padding: 4px;
-  font-size: 15px;
+  font-size: 13px;
   text-align: left;
   color: ${({ theme }: IStyledProps) =>
     theme.colors.primary_text_color};

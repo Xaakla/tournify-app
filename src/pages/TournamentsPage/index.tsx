@@ -22,6 +22,7 @@ import GlobalContext from "../../context";
 import {RouteStackParamList} from "../../interfaces/route-stack-param-list.type";
 import {ITournament} from "../../interfaces/tournament.interface";
 import PermissionsButton from "../../components/PermissionsButton";
+import axios from "axios";
 
 export default function TournamentsPage({
   navigation,
@@ -29,13 +30,28 @@ export default function TournamentsPage({
   const { theme } = useContext(GlobalContext);
   const [tournaments, setTournaments] = useState<ITournament[]>([]);
 
+  const fetchApi = async () => {
+    try {
+      const response = await axios.get("http://192.168.0.121:8080/league-stage");
+
+      setTournaments(response.data);
+      console.log('response', response.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   useEffect(() => {
     navigation.addListener("focus", () => {
-      TournamentService.findAll()
-        .then((response: any) => {
-          setTournaments(response._array);
-        })
-        .catch((err) => console.error(err));
+      // TournamentService.findAll()
+      //   .then((response: any) => {
+      //     setTournaments(response._array);
+      //   })
+      //   .catch((err) => console.error(err));
+
+      fetchApi().then(r => {
+        console.log('r', r)
+      }).catch(err => console.error(err));
     });
   }, []);
 
@@ -78,12 +94,12 @@ export default function TournamentsPage({
         keyboardShouldPersistTaps="handled"
         numColumns={3}
         data={tournaments}
-        keyExtractor={(item: ITournament) => String(item.id)}
-        renderItem={({ item }: { item: ITournament }) => {
+        keyExtractor={(item: any) => String(item.id)}
+        renderItem={({ item }: { item: any }) => {
           return (
             <DataListContainer
               onPress={() =>
-                navigation.navigate("Tournament", { tournament: item })
+                navigation.navigate("Tournament")
               }
             >
               <DataListImage source={{ uri: item.uri }} />
