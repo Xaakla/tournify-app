@@ -15,16 +15,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch",
+          "remote-notification"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.DETECT_SCREEN_CAPTURE"
+      ],
+      "package": "com.anonymous.tournamentsmanager"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "316b745d-e57f-4a45-a7c3-e225caad5140"
+      }
+    },
+    "scheme": "tournament-manager"
   }
 }
