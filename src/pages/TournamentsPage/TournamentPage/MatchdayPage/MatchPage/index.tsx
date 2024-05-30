@@ -50,7 +50,7 @@ export default function MatchPage({
   };
   const [tournament, setTournament] = useState(route.params.tournament);
   const [teams, setTeams] = useState<ITournamentTeam[]>([]);
-  const [match, setMatch] = useState<IMatch>(route.params.match);
+  const [match, setMatch] = useState<any>(route.params.match);
   const [canSave, setCanSave] = useState<boolean>(true);
   const [isConfigOpen, setIsConfigOpen] = useState<boolean>(false);
 
@@ -200,7 +200,7 @@ export default function MatchPage({
         <MatchBoard>
           <MatchBoardTeam>
             <TeamImage
-              source={{ uri: match.home_team_uri }}
+              source={{ uri: `http://192.168.0.121:8080/teams/${match.home.id}/image` }}
               width={50}
               height={50}
               ml={2}
@@ -211,7 +211,7 @@ export default function MatchPage({
               {match.home_team_name}
             </MatchBoardTeamName>
           </MatchBoardTeam>
-          {match.status === "start" && (
+          {match.status === "NOT_STARTED" && (
             <StartMatchButton
               onPress={() => {
                 setMatch({ ...match, status: "playing" });
@@ -221,7 +221,7 @@ export default function MatchPage({
               <StartMatchButtonLabel>START</StartMatchButtonLabel>
             </StartMatchButton>
           )}
-          {match.status === "playing" && (
+          {match.status === "ONGOING" && (
             <>
               <MatchBoardGoalsInput
                 keyboardType="numeric"
@@ -243,7 +243,7 @@ export default function MatchPage({
               />
             </>
           )}
-          {match.status === "fulltime" && (
+          {match.status === "FINISHED" && (
             <>
               <MatchBoardGoalsView>{match.home_team_goals}</MatchBoardGoalsView>
               <MatchBoardVS>:</MatchBoardVS>
@@ -253,7 +253,7 @@ export default function MatchPage({
 
           <MatchBoardTeam>
             <TeamImage
-              source={{ uri: match.away_team_uri }}
+              source={{ uri: `http://192.168.0.121:8080/teams/${match.away.id}/image` }}
               width={50}
               height={50}
               ml={2}

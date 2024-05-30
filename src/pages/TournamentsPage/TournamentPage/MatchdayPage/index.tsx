@@ -25,6 +25,7 @@ import {ITournament} from "../../../../interfaces/tournament.interface";
 import {IRound} from "../../../../interfaces/round.interface";
 import {IMatch} from "../../../../interfaces/match-interface";
 import axios from "axios";
+import {Text} from "react-native";
 
 export default function MatchdayPage({
   navigation,
@@ -151,8 +152,6 @@ export default function MatchdayPage({
       <MatchdayContainer>
         {selectedMatchday >= 0 &&
           rounds[selectedMatchday]?.matches.map((match, index) => {
-              // console.log('match', match);
-
               return (
                 <SingleMatch
                   key={`key-${match.id}`}
@@ -160,15 +159,15 @@ export default function MatchdayPage({
                     () => {
                       // findLastMatches(match.home_team_id)
                       // console.log('oia os matches ai', findLastMatches(match.home_team_id));
-                      // navigation.push("Match", {
-                      //   match: {
-                      //     ...match,
-                      //     home_team_last_matches: findLastMatches(match.home_team_id),
-                      //     away_team_last_matches: findLastMatches(match.away_team_id)
-                      //   },
-                      //   matchday: selectedMatchday,
-                      //   tournament
-                      // })
+                      navigation.push("Match", {
+                        match: {
+                          ...match,
+                          // home_team_last_matches: findLastMatches(match.home_team_id),
+                          // away_team_last_matches: findLastMatches(match.away_team_id)
+                        },
+                        matchday: selectedMatchday,
+                        tournament
+                      })
                     }
                   }
                 >
@@ -176,7 +175,7 @@ export default function MatchdayPage({
                     <SingleMatchTeam>
                       <SingleMatchTeamStat>
                         <TeamImage
-                          source={{ uri: match.home['imageId'] }}
+                          source={{ uri: `http://192.168.0.121:8080/teams/${match.home.id}/image` }}
                           width={30}
                           height={30}
                           ml={2}
@@ -193,7 +192,7 @@ export default function MatchdayPage({
                     <SingleMatchTeam>
                       <SingleMatchTeamStat>
                         <TeamImage
-                          source={{ uri: match.away['imageId'] }}
+                          source={{ uri: `http://192.168.0.121:8080/teams/${match.away.id}/image` }}
                           width={30}
                           height={30}
                           ml={2}

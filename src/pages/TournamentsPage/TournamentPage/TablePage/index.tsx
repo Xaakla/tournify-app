@@ -42,6 +42,14 @@ export default function TablePage({
     }
   }
 
+  const fetchTeamImages = async () => {
+    try {
+      const image = await axios.get("http://192.168.0.121:8080/teams/1/image");
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   useEffect(() => {
     navigation.addListener("focus", () => {
       fetchApi().then(() => {
@@ -98,7 +106,7 @@ export default function TablePage({
             <Position key={team.id}>
               <NPosition color={color}>{index + 1}</NPosition>
               <TeamImage
-                source={{ uri: team.team.imageId }}
+                source={{ uri: `http://192.168.0.121:8080/teams/${team.team.id}/image` }}
                 width={25}
                 height={25}
                 ml={4}
